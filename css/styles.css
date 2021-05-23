@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  background-color: darkgray;
+}
+
+#container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+#playfield {
+  background-color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1em;
+  letter-spacing: 10px;
+}
+
+.cell {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+}
+
+.alive {
+  background-color: black;
+}
+
+.dead {
+  background-color: white;
+}
