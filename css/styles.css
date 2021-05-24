@@ -11,10 +11,8 @@ body {
 }
 
 #playfield {
-  background-color: white;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 1em;
-  letter-spacing: 10px;
+  background-color: red;
+  _position: relative;
 }
 
 .cell {
@@ -22,12 +20,15 @@ body {
   height: 10px;
   position: absolute;
   border-radius: 8px;
+  background-color: aquamarine;
 }
 
 .alive {
   background-color: black;
+  transition: all 0.2s;
 }
 
 .dead {
-  background-color: white;
+  background-color: darkgray;
+  transition: all 0.2s;
 }

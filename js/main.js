@@ -91,7 +91,7 @@ const get_neighbours = (matrix, x, y) => {
 const loop = () => {
   count++;
   display(matrix);
-  if (count % 10 == 0) {
+  if (count % 1 == 0) {
     let cell;
 
     let new_matrix = JSON.parse(JSON.stringify(matrix));
@@ -114,9 +114,9 @@ const loop = () => {
 };
 
 var count = 0;
-var size = 50;
+var size = 80;
 
 var matrix = init_matrix(size);
 generate_playfield(size);
-matrix = fill_random(matrix, 150);
+matrix = fill_random(matrix, 400);
 loop();
