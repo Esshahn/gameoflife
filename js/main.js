@@ -12,19 +12,19 @@ const generate_playfield = (size) => {
       let div = document.createElement("div");
       div.id = y + "-" + x;
       div.className = "cell dead";
-      div.style.left = x * 11 + "px";
-      div.style.top = y * 11 + "px";
+      div.style.left = x * 10 + "px";
+      div.style.top = y * 10 + "px";
       playfield.appendChild(div);
     }
   }
 };
 
-const display = (matrix) => {
-  let size = matrix.length;
+const display = (m) => {
+  let size = m.length;
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       let cell = document.getElementById(y + "-" + x);
-      let element = matrix[y][x];
+      let element = m[y][x];
       if (element == 0) {
         cell.className = "cell dead";
       } else {
@@ -35,20 +35,12 @@ const display = (matrix) => {
 };
 
 const init_matrix = (size) => {
-  const matrix = new Array(size).fill(0).map(() => new Array(size).fill(0));
-  return matrix;
+  return new Array(size).fill(0).map(() => new Array(size).fill(0));
 };
 
-const setpos = (matrix, x, y, value) => {
-  matrix[y][x] = value;
-  return matrix;
-};
-
-const flip = (matrix, x, y) => {
-  if (matrix[y][x] == 0) {
-    matrix[y][x] = 1;
-  } else {
-    matrix[y][x] = 0;
+const fill_random = (matrix, amount) => {
+  for (let i = 0; i < amount; i++) {
+    matrix = set_random(matrix);
   }
   return matrix;
 };
@@ -61,9 +53,12 @@ const set_random = (matrix) => {
   return matrix;
 };
 
-const fill_random = (matrix, amount) => {
-  for (let i = 0; i < amount; i++) {
-    matrix = set_random(matrix);
+const fill_shape = (matrix) => {
+  let mid = matrix.length / 2;
+  for (let y = 0 + mid; y < 3 + mid; y++) {
+    for (let x = 0 + mid; x < 3 + mid; x++) {
+      matrix[y][x] = 1;
+    }
   }
   return matrix;
 };
@@ -89,34 +84,39 @@ const get_neighbours = (matrix, x, y) => {
   n += matrix[bottom][left];
   n += matrix[bottom][x];
   n += matrix[bottom][right];
+  //console.log("x:" + x + " y:" + y + " n:" + n);
   return n;
 };
 
 const loop = () => {
   count++;
+  display(matrix);
   if (count % 10 == 0) {
     let cell;
 
+    let new_matrix = JSON.parse(JSON.stringify(matrix));
     for (let y = 0; y < matrix.length; y++) {
       for (let x = 0; x < matrix.length; x++) {
         let cell = matrix[y][x];
         let n = get_neighbours(matrix, x, y);
         if (cell == 0) {
-          if (n == 3) matrix = flip(matrix, x, y);
-        } else {
-          if (n < 2 || n > 3) matrix = flip(matrix, x, y);
+          if (n == 3) new_matrix[y][x] = 1;
+        }
+        if (cell == 1) {
+          if (n < 2 || n > 3) new_matrix[y][x] = 0;
         }
       }
     }
+    matrix = JSON.parse(JSON.stringify(new_matrix));
   }
-  display(matrix);
+
   window.requestAnimationFrame(loop);
 };
 
 var count = 0;
-var size = 30;
+var size = 50;
 
 var matrix = init_matrix(size);
 generate_playfield(size);
-matrix = fill_random(matrix, 60);
+matrix = fill_random(matrix, 150);
 loop();

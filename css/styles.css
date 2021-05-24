@@ -21,6 +21,7 @@ body {
   width: 10px;
   height: 10px;
   position: absolute;
+  border-radius: 8px;
 }
 
 .alive {
