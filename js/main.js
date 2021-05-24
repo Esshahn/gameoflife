@@ -1,9 +1,3 @@
-/*
-
-  game of life without checking how game of life works
-
-*/
-
 const generate_playfield = (size) => {
   let playfield = document.getElementById("playfield");
 
@@ -38,37 +32,27 @@ const init_matrix = (size) => {
   return new Array(size).fill(0).map(() => new Array(size).fill(0));
 };
 
-const fill_random = (matrix, amount) => {
+const fill_random = (m, amount) => {
   for (let i = 0; i < amount; i++) {
-    matrix = set_random(matrix);
+    m = set_random(m);
   }
-  return matrix;
+  return m;
 };
 
-const set_random = (matrix) => {
-  let size = matrix.length;
+const set_random = (m) => {
+  let size = m.length;
   let x = Math.floor(Math.random() * size);
   let y = Math.floor(Math.random() * size);
-  matrix[y][x] = 1;
-  return matrix;
+  m[y][x] = 1;
+  return m;
 };
 
-const fill_shape = (matrix) => {
-  let mid = matrix.length / 2;
-  for (let y = 0 + mid; y < 3 + mid; y++) {
-    for (let x = 0 + mid; x < 3 + mid; x++) {
-      matrix[y][x] = 1;
-    }
-  }
-  return matrix;
-};
-
-const get_neighbours = (matrix, x, y) => {
+const get_neighbours = (m, x, y) => {
   let top = y - 1;
   let bottom = y + 1;
   let left = x - 1;
   let right = x + 1;
-  let size = matrix.length - 1;
+  let size = m.length - 1;
 
   if (top < 0) top = size;
   if (bottom > size) bottom = 0;
@@ -76,15 +60,14 @@ const get_neighbours = (matrix, x, y) => {
   if (right > size) right = 0;
 
   let n = 0;
-  n += matrix[top][left];
-  n += matrix[top][x];
-  n += matrix[top][right];
-  n += matrix[y][left];
-  n += matrix[y][right];
-  n += matrix[bottom][left];
-  n += matrix[bottom][x];
-  n += matrix[bottom][right];
-  //console.log("x:" + x + " y:" + y + " n:" + n);
+  n += m[top][left];
+  n += m[top][x];
+  n += m[top][right];
+  n += m[y][left];
+  n += m[y][right];
+  n += m[bottom][left];
+  n += m[bottom][x];
+  n += m[bottom][right];
   return n;
 };
 
@@ -109,14 +92,13 @@ const loop = () => {
     }
     matrix = JSON.parse(JSON.stringify(new_matrix));
   }
-
   window.requestAnimationFrame(loop);
 };
 
 var count = 0;
 var size = 80;
+generate_playfield(size);
 
 var matrix = init_matrix(size);
-generate_playfield(size);
 matrix = fill_random(matrix, 400);
 loop();
