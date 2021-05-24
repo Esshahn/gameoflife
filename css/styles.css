@@ -29,7 +29,6 @@ body {
   width: 14px;
   height: 14px;
   z-index: 100;
-  _transition: all 0.2s;
 }
 
 .dead {
