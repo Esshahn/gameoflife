@@ -1,6 +1,5 @@
 const generate_playfield = (size) => {
   let playfield = document.getElementById("playfield");
-
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       let div = document.createElement("div");
@@ -40,9 +39,8 @@ const fill_random = (m, amount) => {
 };
 
 const set_random = (m) => {
-  let size = m.length;
-  let x = Math.floor(Math.random() * size);
-  let y = Math.floor(Math.random() * size);
+  let x = Math.floor(Math.random() * m.length);
+  let y = Math.floor(Math.random() * m.length);
   m[y][x] = 1;
   return m;
 };
@@ -73,8 +71,7 @@ const get_neighbours = (m, x, y) => {
 
 const loop = () => {
   count++;
-  display(matrix);
-  if (count % 1 == 0) {
+  if (count % 2 == 0) {
     let cell;
 
     let new_matrix = JSON.parse(JSON.stringify(matrix));
@@ -91,14 +88,15 @@ const loop = () => {
       }
     }
     matrix = JSON.parse(JSON.stringify(new_matrix));
+    display(matrix);
   }
   window.requestAnimationFrame(loop);
 };
 
 var count = 0;
-var size = 80;
+var size = 60;
 generate_playfield(size);
 
 var matrix = init_matrix(size);
-matrix = fill_random(matrix, 400);
+matrix = fill_random(matrix, 800);
 loop();
