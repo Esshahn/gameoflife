@@ -5,8 +5,8 @@ const generate_playfield = (size) => {
       let div = document.createElement("div");
       div.id = y + "-" + x;
       div.className = "cell dead";
-      div.style.left = x * 10 + "px";
-      div.style.top = y * 10 + "px";
+      div.style.left = x * (100 / size) + "%";
+      div.style.top = y * (100 / size) + "%";
       playfield.appendChild(div);
     }
   }
@@ -94,9 +94,9 @@ const loop = () => {
 };
 
 var count = 0;
-var size = 60;
+var size = 40;
 generate_playfield(size);
 
 var matrix = init_matrix(size);
-matrix = fill_random(matrix, 800);
+matrix = fill_random(matrix, size * 10);
 loop();

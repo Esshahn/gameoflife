@@ -11,8 +11,10 @@ body {
 }
 
 #playfield {
-  background-color: red;
-  _position: relative;
+  background-color: rgb(124, 124, 124);
+  position: relative;
+  width: 80%;
+  height: 80%;
 }
 
 .cell {
