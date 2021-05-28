@@ -70,10 +70,10 @@ const get_neighbours = (m, x, y) => {
 };
 
 const loop = () => {
+  console.log(count);
   count++;
-  if (count % 2 == 0) {
+  if (count % 10 == 0) {
     let cell;
-
     let new_matrix = JSON.parse(JSON.stringify(matrix));
     for (let y = 0; y < matrix.length; y++) {
       for (let x = 0; x < matrix.length; x++) {
@@ -93,10 +93,13 @@ const loop = () => {
   window.requestAnimationFrame(loop);
 };
 
-var count = 0;
-var size = 40;
-generate_playfield(size);
+const reset = () => {
+  generate_playfield(size);
+  matrix = init_matrix(size);
+  matrix = fill_random(matrix, size * 4);
+  loop();
+};
 
-var matrix = init_matrix(size);
-matrix = fill_random(matrix, size * 10);
-loop();
+var count = 0;
+var size = 50;
+var matrix;
