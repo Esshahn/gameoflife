@@ -20,10 +20,20 @@
   <body onload="reset();">
     <!-- Content -->
     <div id="container">
-      <div id="playfield"></div>
       <div id="controls">
+        <div class="inputinfo">Size</div>
+      <input type="text" id="size" name="size">
+
+      <div class="inputinfo">Seed</div>
+      <input type="text" id="seed" name="seed">
+
+      <div class="inputinfo">Speed (1 = fastest)</div>
+      <input type="text" id="speed" name="speed">
+
       <button onclick="reset();">Reset</button>
       </div>
+      <div id="playfield"></div>
+
     </div>
     <script type="text/javascript" src="js/main.js"></script>
   </body>

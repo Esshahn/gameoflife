@@ -1,5 +1,6 @@
 const generate_playfield = (size) => {
   let playfield = document.getElementById("playfield");
+  playfield.innerHTML = "";
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       let div = document.createElement("div");
@@ -69,10 +70,21 @@ const get_neighbours = (m, x, y) => {
   return n;
 };
 
+const update_ui = (elem_id, value) => {
+  e = document.getElementById(elem_id);
+  e.value = value;
+};
+
+const get_from_ui = (elem_id, min = 1, max = 50) => {
+  let val = parseInt(document.getElementById(elem_id).value);
+  if (val > max) val = max;
+  if (val < min) val = min;
+  return val;
+};
+
 const loop = () => {
-  console.log(count);
   count++;
-  if (count % 10 == 0) {
+  if (count % speed == 0) {
     let cell;
     let new_matrix = JSON.parse(JSON.stringify(matrix));
     for (let y = 0; y < matrix.length; y++) {
@@ -90,16 +102,30 @@ const loop = () => {
     matrix = JSON.parse(JSON.stringify(new_matrix));
     display(matrix);
   }
-  window.requestAnimationFrame(loop);
+  request = window.requestAnimationFrame(loop);
 };
 
 const reset = () => {
+  count = 0;
+  size = get_from_ui("size", 4, 50);
+  seed = get_from_ui("seed", 0, 500);
+  speed = get_from_ui("speed", 1, 100);
+  update_ui("size", size);
+  update_ui("seed", seed);
+  update_ui("speed", speed);
   generate_playfield(size);
   matrix = init_matrix(size);
-  matrix = fill_random(matrix, size * 4);
+  matrix = fill_random(matrix, seed);
+  cancelAnimationFrame(request);
   loop();
 };
 
 var count = 0;
-var size = 50;
+var size = 20;
+var seed = size * 4;
+var speed = 20;
 var matrix;
+var request;
+update_ui("size", size);
+update_ui("seed", seed);
+update_ui("speed", speed);

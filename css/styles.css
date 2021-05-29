@@ -10,6 +10,49 @@ body {
   height: 100vh;
 }
 
+#controls {
+  background-color: dimgrey;
+  margin: 10px;
+  width: 200px;
+  height: 80%;
+  overflow: hidden;
+  text-align: center;
+}
+
+#controls button {
+  padding: 10px;
+  margin-top: 20px;
+  width: 80%;
+  background-color: black;
+  color: white;
+  transition: all 0.2s;
+  border: 0px;
+}
+
+#controls button:hover {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+#controls input {
+  width: 80%;
+  margin: 0px;
+  border: 0px;
+  line-height: 280%;
+  text-align: center;
+}
+
+#controls .inputinfo {
+  color: white;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-transform: uppercase;
+  font-size: small;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 4px;
+}
+
 #playfield {
   background-color: rgb(124, 124, 124);
   position: relative;
