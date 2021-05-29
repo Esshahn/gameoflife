@@ -8,6 +8,8 @@ const generate_playfield = (size) => {
       div.className = "cell dead";
       div.style.left = x * (100 / size) + "%";
       div.style.top = y * (100 / size) + "%";
+      div.style.height = 100 / size - 0 + "%";
+      div.style.width = 100 / size - 0 + "%";
       playfield.appendChild(div);
     }
   }
