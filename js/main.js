@@ -8,8 +8,8 @@ const generate_playfield = (size) => {
       div.className = "cell dead";
       div.style.left = x * (100 / size) + "%";
       div.style.top = y * (100 / size) + "%";
-      div.style.height = 100 / size - 0 + "%";
-      div.style.width = 100 / size - 0 + "%";
+      div.style.height = 100 / size + "%";
+      div.style.width = 100 / size + "%";
       playfield.appendChild(div);
     }
   }
@@ -81,7 +81,9 @@ const update_ui = (elem_id, value) => {
 };
 
 const get_from_ui = (elem_id, min = 1, max = 50) => {
-  let val = parseInt(document.getElementById(elem_id).value);
+  let val = parseInt(document.getElementById(elem_id).value, 10);
+
+  if (isNaN(val)) val = max / 10;
   if (val > max) val = max;
   if (val < min) val = min;
   return val;
