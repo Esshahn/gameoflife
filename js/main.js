@@ -91,7 +91,7 @@ const get_from_ui = (elem_id, min = 1, max = 50) => {
 
 const loop = () => {
   count++;
-  if (count % speed == 0) {
+  if (count % (100 - speed - 1) == 0) {
     let cell;
     let new_matrix = JSON.parse(JSON.stringify(matrix));
     for (let y = 0; y < matrix.length; y++) {
@@ -130,7 +130,7 @@ const reset = () => {
   count = 0;
   size = get_from_ui("size", 4, 50);
   seed = get_from_ui("seed", 0, 500);
-  speed = get_from_ui("speed", 1, 100);
+  speed = document.getElementById("speed").innerHTML;
   update_ui("size", size);
   update_ui("seed", seed);
   update_ui("speed", speed);
@@ -139,12 +139,20 @@ const reset = () => {
   matrix = fill_random(matrix, seed);
 };
 
+var slider = document.getElementById("myRange");
 var count = 0;
 var size = 20;
 var seed = size * 4;
-var speed = 20;
+var speed = slider.value;
 var matrix;
 var request;
 update_ui("size", size);
 update_ui("seed", seed);
 update_ui("speed", speed);
+
+document.getElementById("speed").innerHTML = speed;
+
+slider.oninput = function () {
+  document.getElementById("speed").innerHTML = this.value;
+  speed = this.value;
+};
