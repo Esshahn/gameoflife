@@ -17,6 +17,7 @@ const generate_playfield = (size) => {
 
 const display = (m) => {
   let size = m.length;
+  let population = 0;
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       let cell = document.getElementById(y + "-" + x);
@@ -25,9 +26,11 @@ const display = (m) => {
         cell.className = "cell dead";
       } else {
         cell.className = "cell alive";
+        population++;
       }
     }
   }
+  return population;
 };
 
 const init_matrix = (size) => {
@@ -102,7 +105,8 @@ const loop = () => {
       }
     }
     matrix = JSON.parse(JSON.stringify(new_matrix));
-    display(matrix);
+    let population = display(matrix);
+    document.getElementById("population").innerHTML = population;
   }
   request = window.requestAnimationFrame(loop);
 };
