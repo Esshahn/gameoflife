@@ -113,6 +113,19 @@ const loop = () => {
   request = window.requestAnimationFrame(loop);
 };
 
+const toggle = () => {
+  let state = document.getElementById("toggle").innerHTML;
+
+  if (state == "Stop") {
+    cancelAnimationFrame(request);
+    document.getElementById("toggle").innerHTML = "Start";
+  }
+  if (state == "Start") {
+    loop();
+    document.getElementById("toggle").innerHTML = "Stop";
+  }
+};
+
 const reset = () => {
   count = 0;
   size = get_from_ui("size", 4, 50);
@@ -124,8 +137,6 @@ const reset = () => {
   generate_playfield(size);
   matrix = init_matrix(size);
   matrix = fill_random(matrix, seed);
-  cancelAnimationFrame(request);
-  loop();
 };
 
 var count = 0;

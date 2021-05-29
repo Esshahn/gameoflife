@@ -71,6 +71,13 @@ body {
   border-radius: 400px;
 }
 
+.cell:hover {
+  transition: all 0.2s;
+  z-index: 1000;
+  background-color: rgb(195, 236, 12);
+  transform: scale(1, 1);
+}
+
 .alive {
   transition: all 0.2s;
   background-color: white;
@@ -81,6 +88,6 @@ body {
 .dead {
   transition: all 0.2s;
   z-index: 0;
-  background-color: rgb(49, 49, 49);
-  transform: scale(0.2, 0.2);
+  background-color: rgb(85, 85, 85);
+  transform: scale(0.6, 0.6);
 }
