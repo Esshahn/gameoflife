@@ -16,16 +16,37 @@ body {
   width: 200px;
   text-align: center;
   height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#controls h1 {
+  color: white;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: large;
+  font-weight: normal;
+  padding: 20px 0px 20px 0px;
+  margin: 0px;
+}
+
+#controls #title {
+  background-color: rgb(50, 50, 50);
+}
+
+.inputsection {
+  flex: 1;
+  padding-top: 10px;
 }
 
 #controls button {
   padding: 10px;
-  margin-top: 20px;
   width: 80%;
   background-color: black;
   color: white;
   transition: all 0.2s;
   border: 0px;
+  margin-top: 10px;
 }
 
 #controls button:hover {
@@ -40,6 +61,7 @@ body {
   border: 0px;
   line-height: 280%;
   text-align: center;
+  border-radius: 32px;
 }
 
 #controls .inputinfo {
@@ -48,8 +70,8 @@ body {
   text-transform: uppercase;
   font-size: small;
   text-align: center;
-  margin-top: 20px;
   margin-bottom: 4px;
+  margin-top: 10px;
 }
 
 #playfield {
@@ -62,7 +84,7 @@ body {
 #controls .infotext {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   color: white;
-  margin-top: 10px;
+
   font-size: xx-large;
 }
 
@@ -76,6 +98,7 @@ body {
   z-index: 1000;
   background-color: rgb(195, 236, 12);
   transform: scale(1, 1);
+  cursor: pointer;
 }
 
 .alive {
