@@ -1,13 +1,15 @@
 const generate_playfield = (size) => {
   let playfield = document.getElementById("playfield");
-
+  playfield.innerHTML = "";
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       let div = document.createElement("div");
       div.id = y + "-" + x;
       div.className = "cell dead";
-      div.style.left = x * 10 + "px";
-      div.style.top = y * 10 + "px";
+      div.style.left = x * (100 / size) + "%";
+      div.style.top = y * (100 / size) + "%";
+      div.style.height = 100 / size + "%";
+      div.style.width = 100 / size + "%";
       playfield.appendChild(div);
     }
   }
@@ -15,6 +17,7 @@ const generate_playfield = (size) => {
 
 const display = (m) => {
   let size = m.length;
+  let population = 0;
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       let cell = document.getElementById(y + "-" + x);
@@ -23,9 +26,11 @@ const display = (m) => {
         cell.className = "cell dead";
       } else {
         cell.className = "cell alive";
+        population++;
       }
     }
   }
+  return population;
 };
 
 const init_matrix = (size) => {
@@ -40,9 +45,8 @@ const fill_random = (m, amount) => {
 };
 
 const set_random = (m) => {
-  let size = m.length;
-  let x = Math.floor(Math.random() * size);
-  let y = Math.floor(Math.random() * size);
+  let x = Math.floor(Math.random() * m.length);
+  let y = Math.floor(Math.random() * m.length);
   m[y][x] = 1;
   return m;
 };
@@ -71,12 +75,24 @@ const get_neighbours = (m, x, y) => {
   return n;
 };
 
+const update_ui = (elem_id, value) => {
+  e = document.getElementById(elem_id);
+  e.value = value;
+};
+
+const get_from_ui = (elem_id, min = 1, max = 50) => {
+  let val = parseInt(document.getElementById(elem_id).value, 10);
+
+  if (isNaN(val)) val = max / 10;
+  if (val > max) val = max;
+  if (val < min) val = min;
+  return val;
+};
+
 const loop = () => {
   count++;
-  display(matrix);
-  if (count % 1 == 0) {
+  if (count % (100 - speed - 1) == 0) {
     let cell;
-
     let new_matrix = JSON.parse(JSON.stringify(matrix));
     for (let y = 0; y < matrix.length; y++) {
       for (let x = 0; x < matrix.length; x++) {
@@ -91,14 +107,52 @@ const loop = () => {
       }
     }
     matrix = JSON.parse(JSON.stringify(new_matrix));
+    let population = display(matrix);
+    document.getElementById("population").innerHTML = population;
   }
-  window.requestAnimationFrame(loop);
+  request = window.requestAnimationFrame(loop);
 };
 
-var count = 0;
-var size = 80;
-generate_playfield(size);
+const toggle = () => {
+  let state = document.getElementById("toggle").innerHTML;
 
-var matrix = init_matrix(size);
-matrix = fill_random(matrix, 400);
-loop();
+  if (state == "Stop") {
+    cancelAnimationFrame(request);
+    document.getElementById("toggle").innerHTML = "Start";
+  }
+  if (state == "Start") {
+    loop();
+    document.getElementById("toggle").innerHTML = "Stop";
+  }
+};
+
+const reset = () => {
+  count = 0;
+  size = get_from_ui("size", 4, 50);
+  seed = get_from_ui("seed", 0, 500);
+  speed = document.getElementById("speed").innerHTML;
+  update_ui("size", size);
+  update_ui("seed", seed);
+  update_ui("speed", speed);
+  generate_playfield(size);
+  matrix = init_matrix(size);
+  matrix = fill_random(matrix, seed);
+};
+
+var slider = document.getElementById("myRange");
+var count = 0;
+var size = 20;
+var seed = size * 4;
+var speed = slider.value;
+var matrix;
+var request;
+update_ui("size", size);
+update_ui("seed", seed);
+update_ui("speed", speed);
+
+document.getElementById("speed").innerHTML = speed;
+
+slider.oninput = function () {
+  document.getElementById("speed").innerHTML = this.value;
+  speed = this.value;
+};
