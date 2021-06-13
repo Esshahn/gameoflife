@@ -10,6 +10,9 @@ const generate_playfield = (size) => {
       div.style.top = y * (100 / size) + "%";
       div.style.height = 100 / size + "%";
       div.style.width = 100 / size + "%";
+      div.onclick = function () {
+        toggle(x, y);
+      };
       playfield.appendChild(div);
     }
   }
@@ -113,20 +116,27 @@ const loop = () => {
   request = window.requestAnimationFrame(loop);
 };
 
-const toggle = () => {
-  let state = document.getElementById("toggle").innerHTML;
+const run = () => {
+  let state = document.getElementById("run").innerHTML;
 
   if (state == "Stop") {
     cancelAnimationFrame(request);
-    document.getElementById("toggle").innerHTML = "Start";
+    document.getElementById("run").innerHTML = "Start";
   }
   if (state == "Start") {
     loop();
-    document.getElementById("toggle").innerHTML = "Stop";
+    document.getElementById("run").innerHTML = "Stop";
   }
 };
 
 const reset = () => {
+  clean();
+  generate_playfield(size);
+  matrix = init_matrix(size);
+  matrix = fill_random(matrix, seed);
+};
+
+const clean = () => {
   count = 0;
   size = get_from_ui("size", 4, 50);
   seed = get_from_ui("seed", 0, 500);
@@ -134,9 +144,17 @@ const reset = () => {
   update_ui("size", size);
   update_ui("seed", seed);
   update_ui("speed", speed);
-  generate_playfield(size);
   matrix = init_matrix(size);
-  matrix = fill_random(matrix, seed);
+};
+
+const toggle = (x, y) => {
+  if (matrix[y][x] == 0) {
+    matrix[y][x] = 1;
+  } else {
+    matrix[y][x] = 0;
+  }
+  let population = display(matrix);
+  document.getElementById("population").innerHTML = population;
 };
 
 var slider = document.getElementById("myRange");

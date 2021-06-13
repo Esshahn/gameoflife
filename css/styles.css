@@ -75,7 +75,7 @@ body {
 }
 
 #playfield {
-  background-color: rgb(124, 124, 124);
+  _background-color: rgb(124, 124, 124);
   position: relative;
   width: 80vh;
   height: 80vh;
@@ -90,7 +90,7 @@ body {
 
 .cell {
   position: absolute;
-  border-radius: 400px;
+  border-radius: 0px;
 }
 
 .cell:hover {
@@ -102,15 +102,15 @@ body {
 }
 
 .alive {
-  transition: all 0.2s;
-  background-color: white;
-  box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.4);
+  _transition: all 0.2s;
+  background-color: rgb(255, 233, 106);
+  box-shadow: 0px 10px 2px 0px rgba(0, 0, 0, 0.2);
   z-index: 100;
 }
 
 .dead {
-  transition: all 0.2s;
+  _transition: all 0.2s;
   z-index: 0;
   background-color: rgb(85, 85, 85);
-  transform: scale(0.6, 0.6);
+  transform: scale(0.4, 0.4);
 }
